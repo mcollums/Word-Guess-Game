@@ -19,15 +19,26 @@
     var guessesRemainingHTML = document.getElementById("guesses-remaining");
     var alreadyGuessedHTML = document.getElementById("already-guessed");
     var answerHTML = document.getElementById("answer");
+    var pictureHTML = document.getElementById("winning-picture");
+
 
     //JS Variables
     //=================================================
     //Array that holds all Hangman words
-    var hangmanArray = ["cat","frog","horse"];
+    var hangmanArray = ["london","paris","amsterdam", "berlin", "brussels", "prague", "copenhagen", "istanbul"];
 
     //variable what randomizes the hangmanArray words
-    var randomWord = hangmanArray[Math.floor(Math.random() * hangmanArray.length)];
-    console.log(randomWord);
+    // var randomWord = hangmanArray[Math.floor(Math.random() * hangmanArray.length)];
+    // console.log(randomWord);
+
+    randomWord = "";
+
+    function newWord () {
+        randomWord = hangmanArray[Math.floor(Math.random() * hangmanArray.length)];
+        console.log(randomWord);
+    }
+
+    newWord ();
 
     //Variable that holds the max # of guesses
     var maxGuesses = 12;
@@ -45,54 +56,80 @@
     function resetGame() {
         maxGuesses = 12;
         letterBank = [];
-        randomWord;
+        newWord();
+        chosenWord = "";
+        spaceWord = "";
     }
 
+    // Variable that takes the randomly generated word and splits it into an array with seperate characters
     var chosenWord = randomWord.split("");
+
+    //variable that holds an array with the same # of "_" as there are characters in var chosenWord
     var spaceWord = [];
+
+    //For loop that adds the same $ of _ to the var spaceWord
     for (var i = 0; i < chosenWord.length; i++) {
         spaceWord[i] = "_";
     }
   
-
+    //Updating the HTML with the needed information before the user presses the key
     guessesRemainingHTML.textContent = maxGuesses;
     currentWordHTML.textContent = spaceWord;
     alreadyGuessedHTML.textContent = letterBank;
     userLossesHTML.textContent = losses;
     userWinsHTML.textContent = wins;
 
+    //When the user presses the keyboard...
     document.onkeyup = function(event) {
+
+        ///The user-directions disappear
         userDirectionsHTML.textContent = "";
 
+        //variable that is subbing for the user key
         var key = event.key;
+
+        //making sure things are working...
         console.log(chosenWord);
         console.log(spaceWord);
 
+        // If the key they press is not in the letterBank array...
         if (letterBank.indexOf(key) === -1) {
+            //The key is pushed to the letterBank array
             letterBank.push(key);
+
+            //For loop that takes the user key and checks if it's in the chosenWord array
             for (var i = 0; i < chosenWord.length; i++) {
-              if (chosenWord[i] === key) {
-                spaceWord[i] = key;
-              } else {
-                console.log("not in the array at this letter");
-              }
+                //If the user key is in the array...
+                if (chosenWord[i] === key) {
+                    //the same index value in spaceWord array is replaced with the user key
+                    spaceWord[i] = key;
+                }
             }
+            //maxGuesses reduced by one when user presses key
             maxGuesses--;
+
+            //If there are no _ left in spaceWord...
             if (spaceWord.indexOf("_") === -1) {
-              wins++;
-              alert("You win!");
-              resetGame();
-            } else if (maxGuesses === 0) {
-              losses++;
+                //Add to wins, alert the player, and start resetGame function
+                wins++;
+                alert("You win!");
+                switch (randomWord) {
+                    case "london":
+                    
+                }
+                //If guesses = 0, losses is increased
+            }   else if (maxGuesses === 0) {
+                losses++;
             }
+            //If user reuses letter, alert is thrown
            } else {
-            console.log("you already typed this letter");
+                alert("you already typed this letter");
            }
 
-        //Adds users key to userKeys variable
-        guessesRemainingHTML.textContent = maxGuesses;
-        currentWordHTML.textContent = spaceWord;
-        alreadyGuessedHTML.textContent = letterBank;
-        userLossesHTML.textContent = losses;
-        userWinsHTML.textContent = wins;
+           //Updates HTML linked variables
+            guessesRemainingHTML.textContent = maxGuesses;
+            currentWordHTML.textContent = spaceWord;
+            alreadyGuessedHTML.textContent = letterBank;
+            userLossesHTML.textContent = losses;
+            userWinsHTML.textContent = wins;
     }
