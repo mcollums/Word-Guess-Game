@@ -14,6 +14,7 @@
      //================================================
     var userDirectionsHTML = document.getElementById("user-directions");
     var userWinsHTML = document.getElementById("user-wins");
+    var userLossesHTML = document.getElementById("user-losses");
     var currentWordHTML = document.getElementById("current-word"); 
     var guessesRemainingHTML = document.getElementById("guesses-remaining");
     var alreadyGuessedHTML = document.getElementById("already-guessed");
@@ -28,38 +29,42 @@
     var randomWord = hangmanArray[Math.floor(Math.random() * hangmanArray.length)];
     console.log(randomWord);
 
-    //variable that holds the necessary # of blanks for the random word chosen by var randomWord
-    // var answerArray = [];
-
     //Variable that holds the max # of guesses
     var maxGuesses = 12;
-
-    // var spaceWord = [];
 
     //variable that holds the # of user wins
     var wins = 0;
 
+    //Variable holds # of Losses
+    var losses = 0;
+
     //Array that holds the user's letters they've guessed
     var letterBank = [];
     
-    //Start function
-    function startGame() {
+    //Reset function after they've guessed the word
+    function resetGame() {
+        maxGuesses = 12;
+        letterBank = [];
+        randomWord;
+    }
+
+    var chosenWord = randomWord.split("");
+    var spaceWord = [];
+    for (var i = 0; i < chosenWord.length; i++) {
+        spaceWord[i] = "_";
     }
   
-    
-    //Function that starts the game when a letter key is pressed
-    // for (let i = 0; i < chosenWord.length; i++) {
-    //     spaceWord.push("_");
-    //    }
+
+    guessesRemainingHTML.textContent = maxGuesses;
+    currentWordHTML.textContent = spaceWord;
+    alreadyGuessedHTML.textContent = letterBank;
+    userLossesHTML.textContent = losses;
+    userWinsHTML.textContent = wins;
+
     document.onkeyup = function(event) {
         userDirectionsHTML.textContent = "";
 
         var key = event.key;
-        var chosenWord = randomWord.split("");
-        var spaceWord = [randomWord.split("_")];
-        for (var i = 0; i < spaceWord.length; i++) {
-            spaceWord[i] = "_";
-        }
         console.log(chosenWord);
         console.log(spaceWord);
 
@@ -73,10 +78,12 @@
               }
             }
             maxGuesses--;
-            if (spaceWord.indexOf("_") !== -1) {
-              console.log("they win");
+            if (spaceWord.indexOf("_") === -1) {
+              wins++;
+              alert("You win!");
+              resetGame();
             } else if (maxGuesses === 0) {
-              console.log("they lose");
+              losses++;
             }
            } else {
             console.log("you already typed this letter");
@@ -86,6 +93,6 @@
         guessesRemainingHTML.textContent = maxGuesses;
         currentWordHTML.textContent = spaceWord;
         alreadyGuessedHTML.textContent = letterBank;
-        alreadyGuessedHTML.textContent = letterBank;
-
+        userLossesHTML.textContent = losses;
+        userWinsHTML.textContent = wins;
     }
