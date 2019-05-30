@@ -113,10 +113,24 @@
                 //Add to wins, alert the player, and start resetGame function
                 wins++;
                 alert("You win!");
+                //switch function determines the picture that's displayed when they win
                 switch (randomWord) {
-                    case "london":
-                    
+                    case "london": pictureHTML.src="assets/images/london.jpeg";
+                    break;
+                    case "paris": pictureHTML.src="assets/images/paris.jpeg";
+                    break;
+                    case "amsterdam": pictureHTML.src="assets/images/amsterdam.jpeg";
+                    break;
+                    case "berlin": pictureHTML.src="assets/images/berlin.jpeg";
+                    break;
+                    case "prague": pictureHTML.src="assets/images/prague.jpeg";
+                    break;
+                    case "copenhagen": pictureHTML.src="assets/images/copenhagen.jpeg";
+                    break;
+                    case "istanbul": pictureHTML.src="assets/images/istanbul.jpeg";
+                    break;  
                 }
+
                 //If guesses = 0, losses is increased
             }   else if (maxGuesses === 0) {
                 losses++;
@@ -132,4 +146,5 @@
             alreadyGuessedHTML.textContent = letterBank;
             userLossesHTML.textContent = losses;
             userWinsHTML.textContent = wins;
+
     }
