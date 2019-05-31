@@ -177,4 +177,4 @@
             userLossesHTML.textContent = losses;
             userWinsHTML.textContent = wins;
 
-    }
+    } //End function
