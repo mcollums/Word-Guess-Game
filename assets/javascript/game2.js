@@ -1,39 +1,33 @@
 //User needs directions to play
 //Need a variable that keeps track of wins and displays the number
 //Need an array of strings we'll use in the Hangman game.
-    //Needs to be random
-    //If a letter is pressed and it's in the array, that letter should take the place of the _ placeholder
+//Needs to be random
+//If a letter is pressed and it's in the array, that letter should take the place of the _ placeholder
 //Need the number of guesses remaining to start at 12
-    //Will decrease everytime a letter key is pressed
+//Will decrease everytime a letter key is pressed
 //Letters that are pressed will be added to an array called AlreadyGuessed
-    //These letters will be displayed to the user
+//These letters will be displayed to the user
 
-     // document.getElementById("chose").innerHTML = "You picked: " + userGuess;
 
-     //HTML variables
-     //================================================
-     var userDirectionsHTML = document.getElementById("user-directions");
-     var userWinsHTML = document.getElementById("user-wins");
-     var userLossesHTML = document.getElementById("user-losses");
-     var currentWordHTML = document.getElementById("current-word"); 
-     var guessesRemainingHTML = document.getElementById("guesses-remaining");
-     var alreadyGuessedHTML = document.getElementById("already-guessed");
-     var answerHTML = document.getElementById("answer");
-     var pictureHTML = document.getElementById("winning-picture");
- 
- 
-     //JS Variables
-     //=================================================
-     //Array that holds all Hangman words
-     var hangmanArray = ["london","paris","amsterdam", "berlin", "brussels", "prague", "copenhagen", "istanbul"];
- 
-     //variable what randomizes the hangmanArray words
-     // var randomWord = hangmanArray[Math.floor(Math.random() * hangmanArray.length)];
-     // console.log(randomWord);
- 
-     //Variable that holds the random word string from the hangmanArray
-     randomWord = "";
-    //  newWord(); //Selects new word from the hangmanArray at random
+//HTML variables
+//================================================
+    var userDirectionsHTML = document.getElementById("user-directions");
+    var userWinsHTML = document.getElementById("user-wins");
+    var userLossesHTML = document.getElementById("user-losses");
+    var currentWordHTML = document.getElementById("current-word"); 
+    var guessesRemainingHTML = document.getElementById("guesses-remaining");
+    var alreadyGuessedHTML = document.getElementById("already-guessed");
+    var answerHTML = document.getElementById("answer");
+    var pictureHTML = document.getElementById("winning-picture");
+
+
+//JS Variables
+//=================================================
+    //Array that holds all Hangman words
+    var hangmanArray = ["london","paris","amsterdam", "berlin", "brussels", "prague", "copenhagen", "istanbul"];
+
+    //Variable that holds the random word string from the hangmanArray
+    randomWord = "";
  
     //Variable that holds the max # of guesses
     var maxGuesses = 12;
@@ -47,22 +41,17 @@
     //Array that holds the user's letters they've guessed
     var letterBank = [];
     
-    // Variable that takes the randomly generated word and splits it into an array with seperate characters
-    // var chosenWord = randomWord.split("");
+    //holds the array of split characters of the random word
     var chosenWord = "";
 
     //variable that holds an array with the same # of "_" as there are characters in var chosenWord
     var spaceWord = [];
     
-    var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h","i", "j", "k", "l", "m",
-                    "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-    
-    var sound = "";
-
+    //variable that holds audio
     var audio = new Audio('assets/sounds/you-win.mp3');
 
-    // Functions
-    //================================================================================
+// Functions Library
+//================================================================================
 
     //Reset function after they've guessed the word
     function resetGame() {
@@ -100,8 +89,8 @@
     }
  
  
-    // When the page Loads
-    //===================================================================
+// Functions that run when the page loads
+//===================================================================
     
     //Calling needed functions...
     newWord(); //Creates new word from the hangmanArray
@@ -154,7 +143,6 @@
                 //Add to wins, alert the player, and start resetGame function
                 wins++;
                 alert("You win!");
-                resetGame();
                 winSound();
                 //switch function determines the picture that's displayed when they win
                 switch (randomWord) {
@@ -173,15 +161,13 @@
                     case "istanbul": pictureHTML.src="assets/images/istanbul.jpeg";
                     break;  
                 }
-
-                //If guesses = 0, losses is increased
-            }   else if (maxGuesses === 0) {
+                resetGame();
+            } else if (maxGuesses === 0) { //If guesses = 0, losses is increased
                 losses++;
                 resetGame();
             }
-            //If user reuses letter, alert is thrown
-        } else {
-                alert("you already typed this letter");
+        } else { //If user reuses letter, alert is thrown
+            alert("you already typed this letter");
         }
 
         //Updates HTML linked variables
